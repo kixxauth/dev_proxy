@@ -9,7 +9,7 @@
         "url": "git://github.com/kixxauth/dev_proxy.git"
     },
     "dependencies": {
-        "http-proxy": "1.0.2",
+        "request": "2.34.0",
         "yargs": "1.2.1"
     },
     "bugs": {"url": "https://github.com/kixxauth/dev_prxy/issues"}

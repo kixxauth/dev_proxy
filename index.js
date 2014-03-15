@@ -2,7 +2,7 @@ var HTTP = require('http')
   , URL = require('url')
 
   , YARGS = require('yargs')
-  , HTTP_PROXY = require('http-proxy')
+  , REQUEST = require('request')
 
 
 exports.main = function () {
@@ -23,10 +23,9 @@ exports.main = function () {
     process.exit(2);
   }
 
-  proxy = HTTP_PROXY.createProxyServer({target: argv.target});
-
   server = HTTP.createServer(function (req, res) {
-    proxy.web(req, res);
+    console.log('request URL:', req.url);
+    req.pipe(REQUEST(argv.target + req.url)).pipe(res);
   });
 
   connection_uri = URL.parse(argv.serve);
