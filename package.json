@@ -10,7 +10,7 @@
     },
     "dependencies": {
         "http-proxy": "1.0.2",
-        "optimist": "0.6.1"
+        "yargs": "1.2.1"
     },
     "bugs": {"url": "https://github.com/kixxauth/dev_prxy/issues"}
 }
