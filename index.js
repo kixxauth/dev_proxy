@@ -4,12 +4,14 @@ var HTTP = require('http')
   , YARGS = require('yargs')
   , REQUEST = require('request')
 
+  , LIB = require('./lib')
+
 
 exports.main = function () {
   var server
     , proxy
     , connection_uri
-    , opts = parseOptions()
+    , opts = parse_options()
     , argv = opts.argv
 
   if (argv.help) {
@@ -23,9 +25,15 @@ exports.main = function () {
     process.exit(2);
   }
 
+  proxy = create_proxy(argv.target);
+
   server = HTTP.createServer(function (req, res) {
-    console.log('request URL:', req.url);
-    req.pipe(REQUEST(argv.target + req.url)).pipe(res);
+    var cached_response
+    if (cached_response = LIB.cache_service.get(req.url)) {
+      cached_response.pipe(res);
+    } else {
+      proxy(req, res);
+    }
   });
 
   connection_uri = URL.parse(argv.serve);
@@ -41,7 +49,8 @@ exports.main = function () {
   });
 };
 
-function parseOptions() {
+
+function parse_options() {
   return YARGS.usage('Run a little server that proxies to another server.')
     .alias('t', 'target')
     .describe('t', 'Target URI like "http://localhost:3000"')
@@ -50,4 +59,12 @@ function parseOptions() {
     .default('s', 'http://localhost:8080')
     .alias('h', 'help')
     .describe('h', "Print this help text.")
+}
+
+
+function create_proxy(target) {
+  return function (req, res) {
+    var buffer = LIB.cache_service.cache(req.url)
+    req.pipe(REQUEST(target + req.url)).pipe(buffer).pipe(res);
+  };
 }
