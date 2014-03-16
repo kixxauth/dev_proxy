@@ -30,7 +30,6 @@ exports.main = function () {
   server = HTTP.createServer(function (req, res) {
     var cached_response
     if (cached_response = LIB.cache_service.get(req)) {
-      console.log('from cache:', req.url);
       cached_response.pipe(res);
     } else {
       proxy(req, res);
