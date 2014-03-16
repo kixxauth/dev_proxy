@@ -29,7 +29,8 @@ exports.main = function () {
 
   server = HTTP.createServer(function (req, res) {
     var cached_response
-    if (cached_response = LIB.cache_service.get(req.url)) {
+    if (cached_response = LIB.cache_service.get(req)) {
+      console.log('from cache:', req.url);
       cached_response.pipe(res);
     } else {
       proxy(req, res);
@@ -64,7 +65,7 @@ function parse_options() {
 
 function create_proxy(target) {
   return function (req, res) {
-    var buffer = LIB.cache_service.cache(req.url)
+    var buffer = LIB.cache_service.cache(req)
     req.pipe(REQUEST(target + req.url)).pipe(buffer).pipe(res);
   };
 }
