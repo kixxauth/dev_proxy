@@ -1,17 +1,17 @@
+Promise = require('iou').Promise
+
 var HTTP = require('http')
   , URL = require('url')
 
   , YARGS = require('yargs')
+  , PATH = require('filepath')
   , REQUEST = require('request')
 
   , LIB = require('./lib')
 
 
 exports.main = function () {
-  var server
-    , proxy
-    , connection_uri
-    , opts = parse_options()
+  var opts = parse_options()
     , argv = opts.argv
 
   if (argv.help) {
@@ -25,7 +25,22 @@ exports.main = function () {
     process.exit(2);
   }
 
-  proxy = create_proxy(argv.target);
+  exports.run({connection_uri: argv.serve, target_uri: argv.target}, function (address) {
+    var hostname = address.address
+      , port = address.port
+      , family = address.family
+
+    console.log('Listening for connections on '+ hostname +':'+ port +' '+ family);
+    console.log('Proxying requests to '+ argv.target);
+    console.log('Press CTRL+c to stop.')
+  });
+};
+
+
+exports.run = function (opts, callback) {
+  var server
+    , proxy = create_proxy(opts.target_uri)
+    , connection_uri = URL.parse(opts.connection_uri)
 
   server = HTTP.createServer(function (req, res) {
     var cached_response
@@ -36,17 +51,37 @@ exports.main = function () {
     }
   });
 
-  connection_uri = URL.parse(argv.serve);
   server.listen(connection_uri.port, connection_uri.hostname, function () {
-    var address = server.address()
-      , hostname = address.address
-      , port = address.port
-      , family = address.family
-
-    console.log('Listening for connections on '+ hostname +':'+ port +' '+ family);
-    console.log('Proxying requests to '+ argv.target);
-    console.log('Press CTRL+c to stop.')
+    return callback(server.address());
   });
+};
+
+exports.run = function (opts, callback) {
+  var promise = Promise.resolve({})
+
+  promise = Promise.resolve(Object.create(null))
+    .then(LIB.middleware.config_reader({path: }))
+    .then(LIB.middleware.create_watcher())
+    .then(LIB.middleware.create_router())
+    .then(LIB.middleware.create_server({
+      connection_uri: opts.connection_uri
+    , target_uri: opts.target_uri
+    }))
+    .then(function (state) {
+      if (typeof callback === 'function') {
+        callback(null, state);
+      }
+      return state;
+    })
+    .fail(function (err) {
+      if (typeof callback === 'function') {
+        callback(err);
+      } else {
+        return Promise.reject(err);
+      }
+    });
+
+  return promise;
 };
 
 
