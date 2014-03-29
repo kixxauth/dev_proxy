@@ -13,7 +13,9 @@
         "yargs": "1.2.1",
         "filepath": "0.8.1",
         "glob": "3.2.9",
-        "request": "2.34.0"
+        "watchr": "2.4.11",
+        "request": "2.34.0",
+        "coffee-script": "1.7.1"
     },
     "bugs": {"url": "https://github.com/kixxauth/dev_prxy/issues"}
 }
