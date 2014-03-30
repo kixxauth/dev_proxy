@@ -1,4 +1,5 @@
-Promise = require('iou').Promise;
+var Promise = require('iou').Promise;
+
 require('coffee-script').register();
 
 var HTTP = require('http')
