@@ -21,12 +21,6 @@ exports.main = function () {
     process.exit(1);
   }
 
-  if (!argv.target) {
-    console.error("Missing required argument: --target\n");
-    console.log(opts.help());
-    process.exit(2);
-  }
-
   run_opts.connection_uri = argv.serve;
   run_opts.target_uri = argv.target;
   run_opts.config_path = argv.config;
