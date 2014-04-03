@@ -22,7 +22,7 @@ exports.main = function () {
     process.exit(1);
   }
 
-  run_opts.connection_uri = argv.serve;
+  run_opts.serve_uri = argv.serve;
   run_opts.target_uri = argv.target;
   run_opts.config_path = argv.config;
 
@@ -30,20 +30,25 @@ exports.main = function () {
 };
 
 
-// opts.connection_uri - The URI String of the dev_proxy server.
+// opts.serve_uri - The URI String of the dev_proxy server.
 // opts.target_uri - The URI String of the target server.
 // opts.config_path - The path String of the configuration file.
 // callback - Callback Function is optional.
 exports.run = function (opts, callback) {
   var state = Object.create(null)
 
-  if (opts.config_path) {
-    state.config_path =  PATH.newPath(opts.config_path);
-  } else {
-    state.config_path = PATH.newPath(__dirname).append('examples', 'rails');
+  if (!opts.config_path) {
+    throw new Error("You need to provide a config path.")
+  }
+  if (!opts.target_uri) {
+    throw new Error("You need to provide a target uri.")
+  }
+  if (!opts.serve_uri) {
+    throw new Error("You need to provide a serve uri.")
   }
 
-  state.connection_uri = opts.connection_uri;
+  state.config_path =  PATH.newPath(opts.config_path);
+  state.serve_uri = opts.serve_uri;
   state.target_uri = opts.target_uri;
 
   function on_success(state) {
@@ -74,14 +79,13 @@ exports.run = function (opts, callback) {
 
 
 function parse_options() {
-  return YARGS.usage('Run a little server that proxies to another server.')
+  return YARGS.usage('Run a little server that reverse proxies to another server.')
     .alias('t', 'target')
-    .describe('t', 'Target URI like "http://localhost:3000"')
+    .describe('t', 'Target server URI like "http://localhost:3000". This is your webserver.')
     .alias('s', 'serve')
-    .describe('s', 'Server URI like "http://192.168.1.102:8080"')
-    .default('s', 'http://localhost:8080')
+    .describe('s', 'Proxy server URI like "http://192.168.1.102:8080". This is the URL you want to point your web browser at.')
     .alias('c', 'config')
-    .describe('c', 'Configuraiton file path')
+    .describe('c', 'Configuration file. See examples/rails.coffee for an example file.')
     .alias('h', 'help')
     .describe('h', "Print this help text.")
 }
