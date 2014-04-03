@@ -1,13 +1,26 @@
 exports.config = (config) ->
+  # File path glob patterns.
+  # All file paths matching these glob patterns will be watched for changes,
+  # and when they are detected, the matching URL cache will be expired.
   config.files "app/assets/**"
   config.files "vendor/assets/**"
 
-  config.match 'app/assets/javascripts/:file', route_path
-  config.match 'app/assets/stylesheets/:file', route_path
-  config.match 'app/assets/images/:file', route_path
-  config.match 'vendor/assets/javascripts/:file', route_path
-  config.match 'vendor/assets/stylesheets/:file', route_path
+  # Match file paths to their corresponding URLs.
+  # The first argument is the match pattern, and the second argument is the
+  # translation function. Any captures made by the matching pattern will be
+  # passed into the translation function in the order they are matched. The
+  # returned URL String from the translation function will be used to expire
+  # the cache for that URL.
+  config.match 'app/assets/:filepath', assets_path
+  config.match 'vendor/assets/:filepath', assets_path
+
+  # Establish a white list of URL Strings of the paths to cache.
+  # If an incoming request URL does not match an include pattern, it will not
+  # be cached and will be simply reverse proxied to the server.
+  config.include /\.html$/
+
   return
 
-  route_path = (file) ->
-    return 'assets'
+
+  assets_path = (filepath) ->
+    return "/assets/#{filepath}"
