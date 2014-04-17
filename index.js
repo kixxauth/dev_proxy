@@ -102,13 +102,3 @@ function die(err) {
   console.error(err.stack);
   process.exit(2);
 }
-
-
-/*
-function create_proxy(target) {
-  return function (req, res) {
-    var buffer = LIB.cache_service.cache(req)
-    req.pipe(REQUEST(target + req.url)).pipe(buffer).pipe(res);
-  };
-}
-*/
