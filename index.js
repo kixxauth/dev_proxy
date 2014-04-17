@@ -1,7 +1,5 @@
 var Promise = require('iou').Promise;
 
-require('coffee-script').register();
-
 var HTTP = require('http')
   , URL = require('url')
 
@@ -22,7 +20,7 @@ exports.main = function () {
     process.exit(1);
   }
 
-  run_opts.serve_uri = argv.serve;
+  run_opts.serve_uri = argv.serve || 'http://localhost:8080';
   run_opts.target_uri = argv.target;
   run_opts.config_path = argv.config;
 
@@ -47,7 +45,7 @@ exports.run = function (opts, callback) {
     throw new Error("You need to provide a serve uri.")
   }
 
-  state.config_path =  PATH.newPath(opts.config_path);
+  state.config_path =  PATH.newPath(opts.config_path).resolve();
   state.serve_uri = opts.serve_uri;
   state.target_uri = opts.target_uri;
 
@@ -79,13 +77,15 @@ exports.run = function (opts, callback) {
 
 
 function parse_options() {
-  return YARGS.usage('Run a little server that reverse proxies to another server.')
+  return YARGS.usage('Run a little server that reverse proxies to another server and optionally caches the results.')
     .alias('t', 'target')
-    .describe('t', 'Target server URI like "http://localhost:3000". This is your webserver.')
+    .describe('t', 'Target server URI like "http://localhost:3000". This is your project webserver.')
+    .demand('t')
     .alias('s', 'serve')
     .describe('s', 'Proxy server URI like "http://192.168.1.102:8080". This is the URL you want to point your web browser at.')
     .alias('c', 'config')
-    .describe('c', 'Configuration file. See examples/rails.coffee for an example file.')
+    .describe('c', 'Configuration file path. See examples/rails.coffee for an example file.')
+    .demand('c')
     .alias('h', 'help')
     .describe('h', "Print this help text.")
 }

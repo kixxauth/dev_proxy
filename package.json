@@ -17,5 +17,5 @@
         "request": "2.34.0",
         "coffee-script": "1.7.1"
     },
-    "bugs": {"url": "https://github.com/kixxauth/dev_prxy/issues"}
+    "bugs": {"url": "https://github.com/kixxauth/dev_proxy/issues"}
 }
