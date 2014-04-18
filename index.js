@@ -92,8 +92,7 @@ function parse_options() {
 
 
 function print_output(state) {
-  console.log('STATE', state);
-  console.log('Listening for connections on '+ state.hostname +':'+ state.port +' '+ state.family);
+  console.log('Listening for connections on '+ state.address.address +':'+ state.address.port +' '+ state.address.family);
   console.log('Proxying requests to '+ state.target_uri);
   console.log('Press CTRL+c to stop.');
 }
