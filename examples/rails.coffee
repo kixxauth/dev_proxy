@@ -17,7 +17,9 @@ exports.config = (config) ->
   # Establish a white list of URL Strings of the paths to cache.
   # If an incoming request URL does not match an include pattern, it will not
   # be cached and will be simply reverse proxied to the server.
-  config.include /\.js$/
+  config.include /\.js\?body=1$/
+  config.include /\.css\?body=1$/
+  config.include /\.(jpg|jpeg|gif|png|svg)$/i
 
   return
 
