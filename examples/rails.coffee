@@ -11,8 +11,8 @@ exports.config = (config) ->
   # passed into the translation function in the order they are matched. The
   # returned URL String from the translation function will be used to expire
   # the cache for that URL.
-  config.url 'app/assets/:filepath', assets_path
-  config.url 'vendor/assets/:filepath', assets_path
+  config.match ':location/assets/javascripts/*', javascript_path
+  config.match ':location/assets/stylesheets/*', stylesheet_path
 
   # Establish a white list of URL Strings of the paths to cache.
   # If an incoming request URL does not match an include pattern, it will not
@@ -22,5 +22,8 @@ exports.config = (config) ->
   return
 
 
-  assets_path = (filepath) ->
-    return "/assets/#{filepath}"
+javascript_path = (location, filepath) ->
+  return "/assets/#{filepath}?body=1"
+
+stylesheet_path = (location, filepath) ->
+  return "/assets/application.css?body=1"
