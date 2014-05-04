@@ -24,7 +24,7 @@ exports.main = function () {
   run_opts.target_uri = argv.target;
   run_opts.config_path = argv.config;
 
-  exports.run(run_opts).then(print_output).catch(die);
+  exports.run(run_opts).then(print_output).catch(LIB.die);
 };
 
 
@@ -95,9 +95,4 @@ function print_output(state) {
   console.log('Listening for connections on '+ state.address.address +':'+ state.address.port +' '+ state.address.family);
   console.log('Proxying requests to '+ state.target_uri);
   console.log('Press CTRL+c to stop.');
-}
-
-function die(err) {
-  console.error(err.stack);
-  process.exit(2);
 }
