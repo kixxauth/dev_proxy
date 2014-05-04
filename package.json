@@ -15,7 +15,8 @@
         "glob": "3.2.9",
         "watchr": "2.4.11",
         "request": "2.34.0",
-        "coffee-script": "1.7.1"
+        "coffee-script": "1.7.1",
+        "path-to-regexp": "0.1.2"
     },
     "bugs": {"url": "https://github.com/kixxauth/dev_proxy/issues"}
 }
