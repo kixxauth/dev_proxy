@@ -13,6 +13,7 @@ exports.config = (config) ->
   # the cache for that URL.
   config.match ':location/assets/javascripts/*', javascript_path
   config.match ':location/assets/stylesheets/*', stylesheet_path
+  config.match ':location/assets/images/*', images_path
 
   # Establish a white list of URL Strings of the paths to cache.
   # If an incoming request URL does not match an include pattern, it will not
@@ -29,3 +30,6 @@ javascript_path = (location, filepath) ->
 
 stylesheet_path = (location, filepath) ->
   return "/assets/application.css?body=1"
+
+images_path = (location, filepath) ->
+  return "/assets/#{filepath}"
