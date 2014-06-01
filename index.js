@@ -52,11 +52,7 @@ exports.main = function () {
 exports.run = function (opts, callback) {
   var state = Object.create(null)
 
-  if (!opts.config_path) {
-    throw new Error("You need to provide a config path.")
-  }
-
-  state.config_path = opts.config_path ? PATH.newPath(opts.config_path).resolve() : null;
+  state.config_path = opts.config_path ? PATH.newPath(opts.config_path).resolve() : config_path();
   state.serve_uri = opts.serve_uri || null;
   state.target_uri = opts.target_uri || null;
 
@@ -75,7 +71,8 @@ exports.run = function (opts, callback) {
     }
   }
 
-  var promise = Promise.resolve(state)
+  var promise = Promise.cast(state)
+    .then(LIB.middleware.create_config_file)
     .then(LIB.middleware.config_reader)
     .then(LIB.middleware.file_watcher)
     .then(LIB.middleware.path_matcher)
