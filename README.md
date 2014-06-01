@@ -20,7 +20,7 @@ Dev Proxy initializes a project by creating a config file in your home directory
 
 Start Dev Proxy by moving into your project directory and running
 
-    dev_proxy
+    devproxy
 
 That's it! Dev Proxy will create a config file for your project inside `~/.dev_proxy/` with the same name as your project folder. You might want to have a look at the config file to make some changes and restart Dev Proxy if you need to make any.
 
