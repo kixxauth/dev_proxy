@@ -1,4 +1,13 @@
 exports.config = (config) ->
+  # The URI for the dev proxy server.
+  # This is the URI you'll point your browser to.
+  # You should definitely override this in your config file.
+  config.serve "http://localhost:8080"
+
+  # The URI of your development server.
+  # This is the URI your local Rails application is running on.
+  config.target "http://localhost:3000"
+
   # File path glob patterns.
   # All file paths matching these glob patterns will be watched for changes,
   # and when they are detected, the matching URL cache will be expired.
