@@ -20,11 +20,28 @@ exports.main = function () {
     process.exit(1);
   }
 
-  run_opts.serve_uri = argv.serve || 'http://localhost:8080';
+  run_opts.serve_uri = argv.serve;
   run_opts.target_uri = argv.target;
-  run_opts.config_path = argv.config || config_path();
+  run_opts.config_path = argv.config;
 
-  exports.run(run_opts).then(print_output).catch(LIB.die);
+  function error_reporter(err) {
+    console.error("Run error:");
+
+    if (err.code === 'CONFIG_NOENT') {
+      console.error(err.message);
+    } else if (err.code === 'CONFIG_ERR') {
+      console.error("Invalid configuration:");
+      console.error(err.message);
+    } else if (err.code === 'ENO_SERVE_URI' || err.code === 'ENO_TARGET_URI') {
+      console.error(err.message);
+    } else {
+      LIB.die(err);
+      return;
+    }
+    process.exit(1);
+  }
+
+  exports.run(run_opts).then(print_output).catch(error_reporter);
 };
 
 
