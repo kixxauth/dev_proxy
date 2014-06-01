@@ -3,9 +3,9 @@ Dev Proxy
 
 An HTTP proxy designed to speed local development of web applications running from other local development environments (like Rails).
 
-Dev Proxy is basically a reverse proxy with caching built in, running on a Node.js server. The caching and reverse proxy settings are very easy to configure.
+Dev Proxy is basically a reverse proxy with caching built in, running on a Node.js server, with simple to use caching and reverse proxy configurations.
 
-*Dev Proxy is a command line tool for Mac and Linux.*
+*Note: Dev Proxy is a command line tool for Mac and Linux.*
 
 ## Installation
 Use NPM to install Dev Proxy for use on the command line globally:
@@ -16,7 +16,7 @@ Use NPM to install Dev Proxy for use on the command line globally:
 Documentation is available on the project home page at http://www.kixx.name/projects/dev_proxy
 
 ## How it Works
-Dev Proxy initializes a project by creating a hidden config file in your home directory, inside a hidden `~/.dev_proxy` directory, creating it if it does not already exist. It then reads the proxy server URI, target URI, file glob patterns, URL match patterns, and white list configurations from there. Example config files can be found in the 'examples/' directory.
+Dev Proxy initializes a project by creating a config file in your home directory, inside a hidden `~/.dev_proxy` directory, creating the hidden directory if it does not already exist. It then reads the proxy server URI, target URI, file glob patterns, URL match patterns, and white list configurations from there. Example config files can be found in the 'examples/' directory.
 
 Start Dev Proxy by moving into your project directory and running
 
