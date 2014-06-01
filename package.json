@@ -2,7 +2,9 @@
     "name": "dev_proxy",
     "version": "1.0.0",
     "description": "An HTTP proxy designed to speed local development of web applications running from other environments (like Rails).",
+    "keywords": ["local", "development", "dev", "http", "proxy", "rails"],
     "author": "Kris Walker <kris@kixx.name> (http://www.kixx.name/)",
+    "homepage": "http://www.kixx.name/projects/dev_proxy",
     "bin": {"devproxy": "./bin/devproxy.js"},
     "repository": {
         "typ": "git",
