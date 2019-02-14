@@ -1,6 +1,6 @@
 {
     "name": "dev_proxy",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "An HTTP proxy designed to speed local development of web applications running from other environments (like Rails).",
     "keywords": [
         "local",
