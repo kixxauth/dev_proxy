@@ -2,23 +2,34 @@
     "name": "dev_proxy",
     "version": "1.0.0",
     "description": "An HTTP proxy designed to speed local development of web applications running from other environments (like Rails).",
-    "keywords": ["local", "development", "dev", "http", "proxy", "rails"],
+    "keywords": [
+        "local",
+        "development",
+        "dev",
+        "http",
+        "proxy",
+        "rails"
+    ],
     "author": "Kris Walker <kris@kixx.name> (http://www.kixx.name/)",
     "homepage": "http://www.kixx.name/projects/dev_proxy",
-    "bin": {"devproxy": "./bin/devproxy.js"},
+    "bin": {
+        "devproxy": "./bin/devproxy.js"
+    },
     "repository": {
         "typ": "git",
         "url": "git://github.com/kixxauth/dev_proxy.git"
     },
     "dependencies": {
-        "iou": "2.0.0",
-        "yargs": "1.2.1",
-        "filepath": "0.8.1",
-        "glob": "3.2.9",
-        "request": "2.34.0",
-        "coffee-script": "1.7.1",
-        "path-to-regexp": "0.1.2",
-        "colors": "0.6.2"
+        "iou": "2.1.0",
+        "yargs": "13.1.0",
+        "filepath": "1.1.0",
+        "glob": "7.1.3",
+        "request": "2.88.0",
+        "coffee-script": "1.12.7",
+        "path-to-regexp": "3.0.0",
+        "colors": "1.3.3"
     },
-    "bugs": {"url": "https://github.com/kixxauth/dev_proxy/issues"}
+    "bugs": {
+        "url": "https://github.com/kixxauth/dev_proxy/issues"
+    }
 }
